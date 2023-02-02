@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+X-KDE-Library=sprite_sheet_generator
+X-Python-2-Compatible=false
+X-Krita-Manual=Manual.html
+Name=SpriteSheet generator
+Comment=Export selected layers into a single document ordered by the same order of the layers
