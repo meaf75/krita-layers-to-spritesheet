@@ -30,15 +30,11 @@ def start():
 
     # Clone layer data
     newNode = newDocument.createNode(node.name(), node.type())
-    bounds = node.bounds()
 
-    newNode.setPixelData(
-      node.pixelData(
-        bounds.x(),
-        bounds.y(),
-        bounds.width(),
-        bounds.height()),
-      bounds.x(),bounds.y(),bounds.width(),bounds.height())
+    # Content of the layer, start from zero to ignore pixels out of the layer
+    pixelData = node.pixelData(0,0,w,h)
+
+    newNode.setPixelData(pixelData,0,0,w,h) # Write data to the new layer
     
     # Reposition node
     newNode.move(idx * w, 0)
