@@ -1,3 +1,5 @@
+from krita import Krita
+
 def start():
   application = Krita.instance()
   currentDoc = application.activeDocument()
@@ -23,16 +25,14 @@ def start():
   )
   
   for idx, node in enumerate(selectedNodes):
-    # Easy way, but not working, making some weird behaviours
-    # newNode = currentDoc.createNode("{}_copy".format(node.name()), node.type())
-    # dupe = node.duplicate()
-    # added = newDocument.rootNode().addChildNode(dupe, None)
-
     # Clone layer data
-    newNode = newDocument.createNode(node.name(), node.type())
+    newNode = newDocument.createNode(node.name(), "paintlayer")
 
     # Content of the layer, start from zero to ignore pixels out of the layer
-    pixelData = node.pixelData(0,0,w,h)
+    if node.type() != "paintlayer":
+      pixelData = node.projectionPixelData(0,0,w,h) # For non paint layers (like filter layers)
+    else:
+      pixelData = node.pixelData(0,0,w,h)
 
     newNode.setPixelData(pixelData,0,0,w,h) # Write data to the new layer
     
@@ -40,5 +40,8 @@ def start():
     newNode.move(idx * w, 0)
     added = newDocument.rootNode().addChildNode(newNode, None)
     print("Added {}: {}".format(newNode.name(),added))
-  
+       
+  newDocument.nodeByName("Background").remove() # .setVisible(False) # Hide background layer
   activeWindow.addView(newDocument)
+
+# start()

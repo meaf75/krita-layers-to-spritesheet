@@ -2,7 +2,7 @@
 spritesheet generator from selected layers
 """
 
-from krita import (Extension, krita)
+from krita import (Extension, Krita)
 from . import sprite_sheet_generator
 
 class spritesheetGeneratorExtension(Extension):
@@ -19,7 +19,7 @@ class spritesheetGeneratorExtension(Extension):
 
     def createActions(self, window):
         generateButton = window.createAction("pykrita_sprite_sheet_generator",
-                                       "Generate SpriteSheet",
+                                       "Generate SpriteSheet from selected layers",
                                        "tools/scripts")
 
         generateButton.setToolTip("Generate spritesheet from selected layers")
